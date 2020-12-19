@@ -41,13 +41,15 @@ function* decreaseSaga() {
   yield put(decrease()); // 특정 액션을 디스패치 해준다.
 }
 
-export function* counterSaga() {
+// Create Watch Saga functions
+export function* watchCount() {
   // takeEvery는 들어오는 모든 액션에 대해 특정 작업을 처리
   yield takeEvery(INCREASE_ASNYC, increaseSaga);
   // takeLatest는 기존에 진행 중이던 작업이 있다면 취소하고 마지막으로 실행된 작업만 수행
   yield takeLatest(DECREASE_ASNYC, decreaseSaga);
 }
 
+// Declare initialState
 const initialState: TCounterState = {
   count: 0,
 };
