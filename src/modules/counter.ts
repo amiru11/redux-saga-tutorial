@@ -1,5 +1,6 @@
 import { createAction, ActionType, createReducer } from 'typesafe-actions';
-import { delay, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { delay, put, takeEvery, takeLatest } from 'redux-saga/effects'; // Effect는 미들웨어에 의해 수행되는 명령을 담고 있는 평범한 자바스크립트 객체
+// Saga는 Effect를 yield하고, Middleware는 Effect를 처리한다.
 
 // Create Action Type
 const INCREASE = 'counter/INCREASE';
