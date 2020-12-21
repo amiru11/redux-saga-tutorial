@@ -25,7 +25,7 @@ const remove = createAction(REMOVE)<number>();
 // Create Saga Action funciton
 // 마우스 클릭 이벤트가 payload 안에 들어가지 않도록 undefined 함수 넘겨주기
 export const getTodosAsync = createAction(GET_TODOS_ASYNC)();
-export const insertAsync = createAction(INSERT_ASYNC)<TTodo>();
+export const insertAsync = createAction(INSERT_ASYNC)<string>();
 export const toggleAsync = createAction(TOGGLE_ASYNC)<number>();
 export const removeAsync = createAction(REMOVE_ASYNC)<number>();
 
@@ -81,8 +81,9 @@ const reducer = createReducer<TTodosState, TTodosAction>(initialState, {
   [INSERT]: (state, { payload: content }) => {
     const todos = state.todos;
     console.log(todos);
+    const id = todos.length ? todos[todos.length - 1].id : 1;
     const todo: TTodo = {
-      id: todos[todos.length - 1]?.id + 1,
+      id,
       content,
       done: false,
     };

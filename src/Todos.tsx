@@ -1,18 +1,25 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'modules';
-import { getTodosAsync, insertAsync, toggleAsync, removeAsync } from 'modules/todos';
+import { getTodosAsync, insertAsync } from 'modules/todos';
 
-const { useEffect } = React;
+import Input from 'components/Input';
+
+const { useState, useEffect } = React;
 
 function Todos() {
   const todos = useSelector((state: RootState) => state.todos.todos); // Get State from redux
   const dispatch = useDispatch(); // Get Dispatch from redux
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    console.log(123);
     dispatch(getTodosAsync());
   }, [dispatch]);
+
+  const onInsert = (): void => {
+    if (!inputValue) return;
+    dispatch(insertAsync(inputValue));
+  };
 
   // const onIncrease = () => {
   //   dispatch(increase());
@@ -32,7 +39,11 @@ function Todos() {
 
   return (
     <div>
-      <h1>Todo List</h1>
+      <h1>🐹Todo List🐹</h1>
+      <div className="input__wrapper">
+        <Input inputValue={inputValue} setInputValue={setInputValue} />
+        <button onClick={onInsert}>Submit</button>
+      </div>
       {todos.length > 0 ? (
         <ul>
           {todos.map((todo) => (
