@@ -1,7 +1,7 @@
 import { createAction, ActionType, createReducer } from 'typesafe-actions';
 import { delay, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
-type TTodo = {
+export type TTodo = {
   id: number;
   content: string;
   done: boolean;

@@ -1,41 +1,41 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'modules';
-import { getTodosAsync, insertAsync } from 'modules/todos';
+import { getTodosAsync, insertAsync, toggleAsync, removeAsync } from 'modules/todos';
 
 import Input from 'components/Input';
+import TodoItem from 'components/TodoItem';
 
-const { useState, useEffect } = React;
+const { useState, useCallback, useEffect } = React;
 
-function Todos() {
+function Todos(): JSX.Element {
   const todos = useSelector((state: RootState) => state.todos.todos); // Get State from redux
   const dispatch = useDispatch(); // Get Dispatch from redux
   const [inputValue, setInputValue] = useState<string>('');
 
-  useEffect(() => {
+  useEffect((): void => {
     dispatch(getTodosAsync());
   }, [dispatch]);
 
-  const onInsert = (): void => {
+  const onInsert = useCallback((): void => {
     if (!inputValue) return;
     dispatch(insertAsync(inputValue));
-  };
+    setInputValue('');
+  }, [dispatch, inputValue]);
 
-  // const onIncrease = () => {
-  //   dispatch(increase());
-  // };
-  // const onDecrease = () => {
-  //   dispatch(decrease());
-  // };
-  // const onIncreaseAsync = () => {
-  //   dispatch(increaseAsync());
-  // };
-  // const onDecreaseAsync = () => {
-  //   dispatch(decreaseAsync());
-  // };
-  // const onIncreaseBy = (count: number) => {
-  //   dispatch(increaseBy(count));
-  // };
+  const onChangeStatus = useCallback(
+    (id: number): void => {
+      dispatch(toggleAsync(id));
+    },
+    [dispatch],
+  );
+
+  const onRemove = useCallback(
+    (id: number): void => {
+      dispatch(removeAsync(id));
+    },
+    [dispatch],
+  );
 
   return (
     <div>
@@ -47,7 +47,7 @@ function Todos() {
       {todos.length > 0 ? (
         <ul>
           {todos.map((todo) => (
-            <li key={todo.id}>{todo.content}</li>
+            <TodoItem key={todo.id} todo={todo} onChangeStatus={onChangeStatus} onRemove={onRemove} />
           ))}
         </ul>
       ) : (
