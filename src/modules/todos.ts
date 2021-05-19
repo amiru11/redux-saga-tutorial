@@ -23,7 +23,6 @@ const insert = createAction(INSERT)<string>();
 const toggle = createAction(TOGGLE)<number>();
 const remove = createAction(REMOVE)<number>();
 // Create Saga Action funciton
-// 마우스 클릭 이벤트가 payload 안에 들어가지 않도록 undefined 함수 넘겨주기
 export const getTodosAsync = createAction(GET_TODOS_ASYNC)();
 export const insertAsync = createAction(INSERT_ASYNC)<string>();
 export const toggleAsync = createAction(TOGGLE_ASYNC)<number>();
